@@ -21,7 +21,7 @@ import java.util.List;
 @Table(name = "tbl_course_type")
 public class CourseType extends UUIDBasedEntity {
 	@Column(name = "type_name", nullable = false, unique = true, length = 100)
-	private String typeName;
+	private String name;
 	@JsonIgnore
 	@OneToMany(mappedBy = "courseType")
 	private List<Course> courses;

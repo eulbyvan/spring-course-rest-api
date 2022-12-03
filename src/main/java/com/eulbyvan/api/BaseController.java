@@ -1,6 +1,7 @@
 package com.eulbyvan.api;
 
 import com.eulbyvan.service.IBaseService;
+import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,10 +14,13 @@ import java.util.Optional;
  */
 
 public class BaseController<T, ID> {
-	private IBaseService<T, ID> service;
+	protected IBaseService<T, ID> service;
 
-	public BaseController(IBaseService<T, ID> service) {
+	protected ModelMapper mp;
+
+	public BaseController(IBaseService<T, ID> service, ModelMapper mp) {
 		this.service = service;
+		this.mp = mp;
 	}
 
 	@GetMapping("/{id}")
@@ -27,11 +31,6 @@ public class BaseController<T, ID> {
 	@GetMapping
 	public List<T> findAll() {
 		return service.findAll();
-	}
-
-	@PostMapping
-	public T add(@RequestBody T req) {
-		return service.create(req);
 	}
 
 	@PutMapping("/{id}")

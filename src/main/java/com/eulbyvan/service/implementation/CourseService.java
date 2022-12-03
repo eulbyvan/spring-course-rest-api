@@ -1,8 +1,12 @@
 package com.eulbyvan.service.implementation;
 
 import com.eulbyvan.model.entity.Course;
+import com.eulbyvan.model.entity.CourseType;
 import com.eulbyvan.repo.ICourseRepo;
+import com.eulbyvan.service.ICourseTypeService;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**
  * @author stu (https://www.eulbyvan.com/)
@@ -12,7 +16,22 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CourseService extends BaseService<Course, String> {
-	public CourseService(ICourseRepo repo) {
+	private ICourseTypeService typeService;
+
+	public CourseService(ICourseRepo repo, ICourseTypeService typeService) {
 		super(repo);
+		this.typeService = typeService;
+	}
+
+	@Override
+	public Course create(Course req) {
+		String reqTypeName = req.getCourseType().getName();
+		Optional<CourseType> existingType = typeService.findByName(reqTypeName);
+
+		existingType.ifPresentOrElse(req::setCourseType, () -> {
+			throw new RuntimeException("pake course type yg ada aja bang");
+		});
+
+		return super.create(req);
 	}
 }

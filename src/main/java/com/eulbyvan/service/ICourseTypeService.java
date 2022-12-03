@@ -1,7 +1,6 @@
-package com.eulbyvan.repo;
+package com.eulbyvan.service;
 
 import com.eulbyvan.model.entity.CourseType;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
@@ -11,6 +10,6 @@ import java.util.Optional;
  * @since 03/12/22
  */
 
-public interface ICourseTypeRepo extends JpaRepository<CourseType, String> {
+public interface ICourseTypeService extends IBaseService<CourseType, String> {
 	Optional<CourseType> findByName(String name);
 }
