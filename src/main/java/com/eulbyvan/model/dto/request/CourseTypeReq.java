@@ -1,4 +1,4 @@
-package com.eulbyvan.model.dto;
+package com.eulbyvan.model.dto.request;
 
 import lombok.Data;
 

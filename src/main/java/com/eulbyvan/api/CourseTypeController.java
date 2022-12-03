@@ -1,6 +1,6 @@
 package com.eulbyvan.api;
 
-import com.eulbyvan.model.dto.CourseTypeReq;
+import com.eulbyvan.model.dto.request.CourseTypeReq;
 import com.eulbyvan.model.entity.CourseType;
 import com.eulbyvan.service.IBaseService;
 import org.modelmapper.ModelMapper;

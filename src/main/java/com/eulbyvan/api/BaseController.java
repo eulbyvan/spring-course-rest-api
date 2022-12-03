@@ -1,11 +1,17 @@
 package com.eulbyvan.api;
 
+import com.eulbyvan.model.dto.response.CommonResponse;
+import com.eulbyvan.model.dto.response.ErrorResponse;
+import com.eulbyvan.model.dto.response.SuccessResponse;
 import com.eulbyvan.service.IBaseService;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author stu (https://www.eulbyvan.com/)
@@ -24,13 +30,53 @@ public class BaseController<T, ID> {
 	}
 
 	@GetMapping("/{id}")
-	public Optional<T> findById(@PathVariable("id") ID reqId) {
-		return service.findById(reqId);
+	public ResponseEntity<CommonResponse> findById(@PathVariable("id") ID reqId) {
+		Optional<T> data = service.findById(reqId);
+
+		if (data.isPresent()) {
+			SuccessResponse<T> res = new SuccessResponse<>();
+
+			List<T> listData = data.stream().collect(Collectors.toList());
+
+			res.setCode(HttpStatus.OK.value());
+			res.setStatus(HttpStatus.OK.getReasonPhrase());
+			res.setMsg("mantap bos, sukses");
+			res.setData(listData);
+
+			return ResponseEntity.status(HttpStatus.OK).body(res);
+		}
+
+		ErrorResponse<T> res = new ErrorResponse<>();
+
+		res.setCode(HttpStatus.NOT_FOUND.value());
+		res.setStatus(HttpStatus.NOT_FOUND.getReasonPhrase());
+		res.setMsg("gaada datanya bang");
+
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(res);
 	}
 
 	@GetMapping
-	public List<T> findAll() {
-		return service.findAll();
+	public ResponseEntity<CommonResponse> findAll() {
+		List<T> data = service.findAll();
+
+		if (!data.isEmpty()) {
+			SuccessResponse<T> res = new SuccessResponse<>();
+
+			res.setCode(HttpStatus.OK.value());
+			res.setStatus(HttpStatus.OK.getReasonPhrase());
+			res.setMsg("mantap bos, sukses");
+			res.setData(data);
+
+			return ResponseEntity.status(HttpStatus.OK).body(res);
+		}
+
+		ErrorResponse<T> res = new ErrorResponse<>();
+
+		res.setCode(HttpStatus.NOT_FOUND.value());
+		res.setStatus(HttpStatus.NOT_FOUND.getReasonPhrase());
+		res.setMsg("gaada datanya bang");
+
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(res);
 	}
 
 	@PutMapping("/{id}")
