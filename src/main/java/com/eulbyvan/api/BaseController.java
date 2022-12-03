@@ -80,12 +80,54 @@ public class BaseController<T, ID> {
 	}
 
 	@PutMapping("/{id}")
-	public T edit(@PathVariable("id") ID reqId, @RequestBody T req) {
-		return service.update(reqId, req);
+	public ResponseEntity<CommonResponse> edit(@PathVariable("id") ID reqId, @RequestBody T req) {
+		T data = service.update(reqId, req);
+		Optional<T> optionalData = Optional.of(data);
+		List<T> listData = optionalData.stream().collect(Collectors.toList());
+
+		if (optionalData.isPresent()) {
+			SuccessResponse<T> res = new SuccessResponse<>();
+
+			res.setCode(HttpStatus.OK.value());
+			res.setStatus(HttpStatus.OK.getReasonPhrase());
+			res.setMsg("mantap bos, sukses");
+			res.setData(listData);
+
+			return ResponseEntity.status(HttpStatus.OK).body(res);
+		}
+
+		ErrorResponse<T> res = new ErrorResponse<>();
+
+		res.setCode(HttpStatus.NOT_FOUND.value());
+		res.setStatus(HttpStatus.NOT_FOUND.getReasonPhrase());
+		res.setMsg("gaada datanya bang");
+
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(res);
 	}
 
 	@DeleteMapping("/{id}")
-	public ID remove(@PathVariable("id") ID reqId) {
-		return service.delete(reqId);
+	public ResponseEntity<CommonResponse> remove(@PathVariable("id") ID reqId) {
+		ID deletedId = service.delete(reqId);
+
+		Optional<ID> optionalId = Optional.of(deletedId);
+
+		if (optionalId.isPresent()) {
+			SuccessResponse<T> res = new SuccessResponse<>();
+
+			res.setCode(HttpStatus.OK.value());
+			res.setStatus(HttpStatus.OK.getReasonPhrase());
+			res.setMsg("mantap bos, sukses");
+			res.setData(null);
+
+			return ResponseEntity.status(HttpStatus.OK).body(res);
+		}
+
+		ErrorResponse<T> res = new ErrorResponse<>();
+
+		res.setCode(HttpStatus.NOT_FOUND.value());
+		res.setStatus(HttpStatus.NOT_FOUND.getReasonPhrase());
+		res.setMsg("gaada datanya bang");
+
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(res);
 	}
 }
