@@ -1,16 +1,15 @@
-package com.eulbyvan.repo;
+package com.eulbyvan.service;
 
 import com.eulbyvan.model.entity.Course;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
 /**
  * @author stu (https://www.eulbyvan.com/)
  * @version 1.0
- * @since 03/12/22
+ * @since 05/12/22
  */
 
-public interface ICourseRepo extends JpaRepository<Course, String> {
+public interface ICourseService extends IBaseService<Course, String> {
 	Optional<Course> findByTitle(String title);
 }

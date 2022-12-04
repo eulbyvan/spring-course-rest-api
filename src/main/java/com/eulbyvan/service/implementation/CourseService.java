@@ -3,6 +3,7 @@ package com.eulbyvan.service.implementation;
 import com.eulbyvan.model.entity.Course;
 import com.eulbyvan.model.entity.CourseType;
 import com.eulbyvan.repo.ICourseRepo;
+import com.eulbyvan.service.ICourseService;
 import com.eulbyvan.service.ICourseTypeService;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +16,13 @@ import java.util.Optional;
  */
 
 @Service
-public class CourseService extends BaseService<Course, String> {
+public class CourseService extends BaseService<Course, String> implements ICourseService {
+	private ICourseRepo courseRepo;
 	private ICourseTypeService typeService;
 
 	public CourseService(ICourseRepo repo, ICourseTypeService typeService) {
 		super(repo);
+		this.courseRepo = repo;
 		this.typeService = typeService;
 	}
 
@@ -33,5 +36,10 @@ public class CourseService extends BaseService<Course, String> {
 		});
 
 		return super.create(req);
+	}
+
+	@Override
+	public Optional<Course> findByTitle(String title) {
+		return courseRepo.findByTitle(title);
 	}
 }

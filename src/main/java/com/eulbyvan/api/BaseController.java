@@ -34,9 +34,9 @@ public class BaseController<T, ID> {
 		Optional<T> data = service.findById(reqId);
 
 		if (data.isPresent()) {
-			SuccessResponse<T> res = new SuccessResponse<>();
-
 			List<T> listData = data.stream().collect(Collectors.toList());
+
+			SuccessResponse<T> res = new SuccessResponse<>();
 
 			res.setCode(HttpStatus.OK.value());
 			res.setStatus(HttpStatus.OK.getReasonPhrase());
