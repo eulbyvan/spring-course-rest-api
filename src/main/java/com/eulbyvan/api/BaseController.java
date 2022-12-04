@@ -19,14 +19,15 @@ import java.util.stream.Collectors;
  * @since 03/12/22
  */
 
-public class BaseController<T, ID> {
+public class BaseController<T, ID, U> {
 	protected IBaseService<T, ID> service;
-
 	protected ModelMapper mp;
+	private Class<T> myClass;
 
-	public BaseController(IBaseService<T, ID> service, ModelMapper mp) {
+	public BaseController(IBaseService<T, ID> service, ModelMapper mp, Class<T> myClass) {
 		this.service = service;
 		this.mp = mp;
+		this.myClass = myClass;
 	}
 
 	@GetMapping("/{id}")
@@ -84,8 +85,10 @@ public class BaseController<T, ID> {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<CommonResponse> edit(@PathVariable("id") ID reqId, @RequestBody T req) {
-		T data = service.update(reqId, req);
+	public ResponseEntity<CommonResponse> edit(@PathVariable("id") ID reqId, @RequestBody U req) {
+		T mappedReq = mp.map(req, myClass);
+
+		T data = service.update(reqId, mappedReq);
 		List<T> listData = Optional.of(data).stream().collect(Collectors.toList());
 
 		if (!listData.isEmpty()) {

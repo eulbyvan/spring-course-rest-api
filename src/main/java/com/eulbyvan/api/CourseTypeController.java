@@ -28,11 +28,11 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/course-types")
-public class CourseTypeController extends BaseController<CourseType, String> {
+public class CourseTypeController extends BaseController<CourseType, String, CourseTypeReq> {
 	private ICourseTypeService typeService;
 
-	public CourseTypeController(IBaseService<CourseType, String> service, ModelMapper mp, ICourseTypeService typeService) {
-		super(service, mp);
+	public CourseTypeController(IBaseService<CourseType, String> service, ModelMapper mp, ICourseTypeService typeService, Class<CourseType> courseTypeClass) {
+		super(service, mp, courseTypeClass);
 		this.typeService = typeService;
 	}
 

@@ -27,18 +27,17 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/courses")
-public class CourseController extends BaseController<Course, String> {
+public class CourseController extends BaseController<Course, String, CourseReq> {
 	private ICourseService courseService;
 
-	public CourseController(IBaseService<Course, String> service, ModelMapper mp, ICourseService courseService) {
-		super(service, mp);
+	public CourseController(IBaseService<Course, String> service, ModelMapper mp, ICourseService courseService, Class<Course> courseClass) {
+		super(service, mp, courseClass);
 		this.courseService = courseService;
 	}
 
 	@PostMapping
 	public ResponseEntity<CommonResponse> add(@RequestBody CourseReq req) {
 		Optional<Course> existingCourse = courseService.findByTitle(req.getTitle());
-
 
 		if (!existingCourse.isPresent()) {
 			Course mappedReq = mp.map(req, Course.class);
