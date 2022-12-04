@@ -57,13 +57,15 @@ public class CourseController extends BaseController<Course, String> {
 			return ResponseEntity.status(HttpStatus.OK).body(res);
 		}
 
+		HttpStatus notAcceptable = HttpStatus.NOT_ACCEPTABLE;
+
 		ErrorResponse<Course> res = new ErrorResponse<>();
 
-		res.setCode(HttpStatus.NOT_ACCEPTABLE.value());
-		res.setStatus(HttpStatus.NOT_ACCEPTABLE.getReasonPhrase());
+		res.setCode(notAcceptable.value());
+		res.setStatus(notAcceptable.getReasonPhrase());
 		res.setMsg("udah ada course dengan title: " + req.getTitle());
 
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(res);
+		return ResponseEntity.status(notAcceptable).body(res);
 	}
 
 //	@GetMapping("/title")

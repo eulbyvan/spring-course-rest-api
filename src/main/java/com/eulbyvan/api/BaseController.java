@@ -46,13 +46,15 @@ public class BaseController<T, ID> {
 			return ResponseEntity.status(HttpStatus.OK).body(res);
 		}
 
+		HttpStatus notFound = HttpStatus.NOT_FOUND;
+
 		ErrorResponse<T> res = new ErrorResponse<>();
 
-		res.setCode(HttpStatus.NOT_FOUND.value());
-		res.setStatus(HttpStatus.NOT_FOUND.getReasonPhrase());
+		res.setCode(notFound.value());
+		res.setStatus(notFound.getReasonPhrase());
 		res.setMsg("gaada datanya bang");
 
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(res);
+		return ResponseEntity.status(notFound).body(res);
 	}
 
 	@GetMapping
@@ -70,13 +72,15 @@ public class BaseController<T, ID> {
 			return ResponseEntity.status(HttpStatus.OK).body(res);
 		}
 
+		HttpStatus notFound = HttpStatus.NOT_FOUND;
+
 		ErrorResponse<T> res = new ErrorResponse<>();
 
-		res.setCode(HttpStatus.NOT_FOUND.value());
-		res.setStatus(HttpStatus.NOT_FOUND.getReasonPhrase());
+		res.setCode(notFound.value());
+		res.setStatus(notFound.getReasonPhrase());
 		res.setMsg("gaada datanya bang");
 
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(res);
+		return ResponseEntity.status(notFound).body(res);
 	}
 
 	@PutMapping("/{id}")
@@ -95,13 +99,15 @@ public class BaseController<T, ID> {
 			return ResponseEntity.status(HttpStatus.OK).body(res);
 		}
 
+		HttpStatus notFound = HttpStatus.NOT_FOUND;
+
 		ErrorResponse<T> res = new ErrorResponse<>();
 
-		res.setCode(HttpStatus.NOT_FOUND.value());
-		res.setStatus(HttpStatus.NOT_FOUND.getReasonPhrase());
+		res.setCode(notFound.value());
+		res.setStatus(notFound.getReasonPhrase());
 		res.setMsg("gaada datanya bang");
 
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(res);
+		return ResponseEntity.status(notFound).body(res);
 	}
 
 	@DeleteMapping("/{id}")
@@ -119,12 +125,14 @@ public class BaseController<T, ID> {
 			return ResponseEntity.status(HttpStatus.OK).body(res);
 		}
 
+		HttpStatus notFound = HttpStatus.NOT_FOUND;
+
 		ErrorResponse<T> res = new ErrorResponse<>();
 
-		res.setCode(HttpStatus.NOT_FOUND.value());
-		res.setStatus(HttpStatus.NOT_FOUND.getReasonPhrase());
+		res.setCode(notFound.value());
+		res.setStatus(notFound.getReasonPhrase());
 		res.setMsg("gaada datanya bang");
 
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(res);
+		return ResponseEntity.status(notFound).body(res);
 	}
 }
