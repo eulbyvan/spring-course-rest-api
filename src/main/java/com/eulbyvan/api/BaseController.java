@@ -82,10 +82,9 @@ public class BaseController<T, ID> {
 	@PutMapping("/{id}")
 	public ResponseEntity<CommonResponse> edit(@PathVariable("id") ID reqId, @RequestBody T req) {
 		T data = service.update(reqId, req);
-		Optional<T> optionalData = Optional.of(data);
-		List<T> listData = optionalData.stream().collect(Collectors.toList());
+		List<T> listData = Optional.of(data).stream().collect(Collectors.toList());
 
-		if (optionalData.isPresent()) {
+		if (!listData.isEmpty()) {
 			SuccessResponse<T> res = new SuccessResponse<>();
 
 			res.setCode(HttpStatus.OK.value());
@@ -109,9 +108,7 @@ public class BaseController<T, ID> {
 	public ResponseEntity<CommonResponse> remove(@PathVariable("id") ID reqId) {
 		ID deletedId = service.delete(reqId);
 
-		Optional<ID> optionalId = Optional.of(deletedId);
-
-		if (optionalId.isPresent()) {
+		if (deletedId.equals(null)) {
 			SuccessResponse<T> res = new SuccessResponse<>();
 
 			res.setCode(HttpStatus.OK.value());
