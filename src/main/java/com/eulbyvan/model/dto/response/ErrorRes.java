@@ -12,10 +12,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 //@AllArgsConstructor
-public class ErrorResponse<T> extends CommonResponse {
+public class ErrorRes<T> extends CommonRes {
 //	private T reason;
 
-	public ErrorResponse(Integer code, String status, String msg) {
+	public ErrorRes(Integer code, String status, String msg) {
 		super.setCode(code);
 		super.setStatus(status);
 		super.setMsg(msg);

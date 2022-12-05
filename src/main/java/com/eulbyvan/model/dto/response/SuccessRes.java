@@ -15,10 +15,10 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SuccessResponse<T> extends CommonResponse {
+public class SuccessRes<T> extends CommonRes {
 	private List<T> data;
 
-	public SuccessResponse(Integer code, String status, String msg, List<T> data) {
+	public SuccessRes(Integer code, String status, String msg, List<T> data) {
 		super.setCode(code);
 		super.setStatus(status);
 		super.setMsg(msg);

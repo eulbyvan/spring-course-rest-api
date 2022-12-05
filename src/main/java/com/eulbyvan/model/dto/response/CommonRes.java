@@ -9,7 +9,7 @@ import lombok.Data;
  */
 
 @Data
-public abstract class CommonResponse {
+public abstract class CommonRes {
 	private Integer code;
 	private String msg;
 	private String status;

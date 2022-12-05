@@ -11,3 +11,6 @@ spring:
 
 server:
   port: ${SERVER_PORT}
+
+service:
+  paymentUrl: ${PAYMENT_SVC}

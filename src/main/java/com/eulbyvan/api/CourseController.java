@@ -1,9 +1,9 @@
 package com.eulbyvan.api;
 
 import com.eulbyvan.model.dto.request.CourseReq;
-import com.eulbyvan.model.dto.response.CommonResponse;
-import com.eulbyvan.model.dto.response.ErrorResponse;
-import com.eulbyvan.model.dto.response.SuccessResponse;
+import com.eulbyvan.model.dto.response.CommonRes;
+import com.eulbyvan.model.dto.response.ErrorRes;
+import com.eulbyvan.model.dto.response.SuccessRes;
 import com.eulbyvan.model.entity.Course;
 import com.eulbyvan.service.IBaseService;
 import com.eulbyvan.service.ICourseService;
@@ -36,7 +36,7 @@ public class CourseController extends BaseController<Course, String, CourseReq> 
 	}
 
 	@PostMapping
-	public ResponseEntity<CommonResponse> add(@RequestBody CourseReq req) {
+	public ResponseEntity<CommonRes> add(@RequestBody CourseReq req) {
 		Optional<Course> existingCourse = courseService.findByTitle(req.getTitle());
 
 		if (!existingCourse.isPresent()) {
@@ -46,7 +46,7 @@ public class CourseController extends BaseController<Course, String, CourseReq> 
 			Optional<Course> addedData = courseService.findByTitle(req.getTitle());
 			List<Course> listData = addedData.stream().collect(Collectors.toList());
 
-			SuccessResponse<Course> res = new SuccessResponse<>();
+			SuccessRes<Course> res = new SuccessRes<>();
 
 			res.setCode(HttpStatus.OK.value());
 			res.setStatus(HttpStatus.OK.getReasonPhrase());
@@ -58,7 +58,7 @@ public class CourseController extends BaseController<Course, String, CourseReq> 
 
 		HttpStatus notAcceptable = HttpStatus.NOT_ACCEPTABLE;
 
-		ErrorResponse<Course> res = new ErrorResponse<>();
+		ErrorRes<Course> res = new ErrorRes<>();
 
 		res.setCode(notAcceptable.value());
 		res.setStatus(notAcceptable.getReasonPhrase());

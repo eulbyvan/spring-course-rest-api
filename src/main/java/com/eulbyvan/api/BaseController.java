@@ -1,8 +1,8 @@
 package com.eulbyvan.api;
 
-import com.eulbyvan.model.dto.response.CommonResponse;
-import com.eulbyvan.model.dto.response.ErrorResponse;
-import com.eulbyvan.model.dto.response.SuccessResponse;
+import com.eulbyvan.model.dto.response.CommonRes;
+import com.eulbyvan.model.dto.response.ErrorRes;
+import com.eulbyvan.model.dto.response.SuccessRes;
 import com.eulbyvan.service.IBaseService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -31,13 +31,13 @@ public class BaseController<T, ID, U> {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<CommonResponse> findById(@PathVariable("id") ID reqId) {
+	public ResponseEntity<CommonRes> findById(@PathVariable("id") ID reqId) {
 		Optional<T> data = service.findById(reqId);
 
 		if (data.isPresent()) {
 			List<T> listData = data.stream().collect(Collectors.toList());
 
-			SuccessResponse<T> res = new SuccessResponse<>();
+			SuccessRes<T> res = new SuccessRes<>();
 
 			res.setCode(HttpStatus.OK.value());
 			res.setStatus(HttpStatus.OK.getReasonPhrase());
@@ -49,7 +49,7 @@ public class BaseController<T, ID, U> {
 
 		HttpStatus notFound = HttpStatus.NOT_FOUND;
 
-		ErrorResponse<T> res = new ErrorResponse<>();
+		ErrorRes<T> res = new ErrorRes<>();
 
 		res.setCode(notFound.value());
 		res.setStatus(notFound.getReasonPhrase());
@@ -59,11 +59,11 @@ public class BaseController<T, ID, U> {
 	}
 
 	@GetMapping
-	public ResponseEntity<CommonResponse> findAll() {
+	public ResponseEntity<CommonRes> findAll() {
 		List<T> data = service.findAll();
 
 		if (!data.isEmpty()) {
-			SuccessResponse<T> res = new SuccessResponse<>();
+			SuccessRes<T> res = new SuccessRes<>();
 
 			res.setCode(HttpStatus.OK.value());
 			res.setStatus(HttpStatus.OK.getReasonPhrase());
@@ -75,7 +75,7 @@ public class BaseController<T, ID, U> {
 
 		HttpStatus notFound = HttpStatus.NOT_FOUND;
 
-		ErrorResponse<T> res = new ErrorResponse<>();
+		ErrorRes<T> res = new ErrorRes<>();
 
 		res.setCode(notFound.value());
 		res.setStatus(notFound.getReasonPhrase());
@@ -85,14 +85,14 @@ public class BaseController<T, ID, U> {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<CommonResponse> edit(@PathVariable("id") ID reqId, @RequestBody U req) {
+	public ResponseEntity<CommonRes> edit(@PathVariable("id") ID reqId, @RequestBody U req) {
 		T mappedReq = mp.map(req, myClass);
 
 		T data = service.update(reqId, mappedReq);
 		List<T> listData = Optional.of(data).stream().collect(Collectors.toList());
 
 		if (!listData.isEmpty()) {
-			SuccessResponse<T> res = new SuccessResponse<>();
+			SuccessRes<T> res = new SuccessRes<>();
 
 			res.setCode(HttpStatus.OK.value());
 			res.setStatus(HttpStatus.OK.getReasonPhrase());
@@ -104,7 +104,7 @@ public class BaseController<T, ID, U> {
 
 		HttpStatus notFound = HttpStatus.NOT_FOUND;
 
-		ErrorResponse<T> res = new ErrorResponse<>();
+		ErrorRes<T> res = new ErrorRes<>();
 
 		res.setCode(notFound.value());
 		res.setStatus(notFound.getReasonPhrase());
@@ -114,11 +114,11 @@ public class BaseController<T, ID, U> {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<CommonResponse> remove(@PathVariable("id") ID reqId) {
+	public ResponseEntity<CommonRes> remove(@PathVariable("id") ID reqId) {
 		ID deletedId = service.delete(reqId);
 
 		if (deletedId.equals(null)) {
-			SuccessResponse<T> res = new SuccessResponse<>();
+			SuccessRes<T> res = new SuccessRes<>();
 
 			res.setCode(HttpStatus.OK.value());
 			res.setStatus(HttpStatus.OK.getReasonPhrase());
@@ -130,7 +130,7 @@ public class BaseController<T, ID, U> {
 
 		HttpStatus notFound = HttpStatus.NOT_FOUND;
 
-		ErrorResponse<T> res = new ErrorResponse<>();
+		ErrorRes<T> res = new ErrorRes<>();
 
 		res.setCode(notFound.value());
 		res.setStatus(notFound.getReasonPhrase());
