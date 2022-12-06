@@ -1,4 +1,4 @@
-package com.eulbyvan.api;
+package com.eulbyvan.api.controller;
 
 import com.eulbyvan.model.dto.response.ErrorRes;
 import com.eulbyvan.model.exception.RestTemplateException;

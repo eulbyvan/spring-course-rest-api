@@ -1,4 +1,4 @@
-package com.eulbyvan.api;
+package com.eulbyvan.api.controller;
 
 import com.eulbyvan.model.dto.request.FormDataWithFile;
 import com.eulbyvan.model.dto.response.CommonRes;
@@ -30,12 +30,12 @@ public class CourseFileController {
     }
 
     @PostMapping
-    public ResponseEntity<CommonRes> upload(FormDataWithFile req) {
+    public ResponseEntity upload(FormDataWithFile req) {
         MultipartFile file = req.getFile();
 
         courseFileService.uploadMaterial(file);
 
-        SuccessRes<MultipartFile> res = new SuccessRes<>("00", "OK", "mantap", List.of(req.getFile()));
+        SuccessRes<String> res = new SuccessRes<>("00", "OK", "mantap", List.of(req.getFile().getName().toString()));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(res);
     }

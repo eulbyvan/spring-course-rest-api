@@ -1,12 +1,13 @@
-package com.eulbyvan.api;
+package com.eulbyvan.api.controller;
 
-import com.eulbyvan.model.dto.request.CourseReq;
+import com.eulbyvan.model.dto.request.CourseTypeReq;
 import com.eulbyvan.model.dto.response.CommonRes;
 import com.eulbyvan.model.dto.response.ErrorRes;
 import com.eulbyvan.model.dto.response.SuccessRes;
 import com.eulbyvan.model.entity.Course;
+import com.eulbyvan.model.entity.CourseType;
 import com.eulbyvan.service.IBaseService;
-import com.eulbyvan.service.ICourseService;
+import com.eulbyvan.service.ICourseTypeService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,27 +27,28 @@ import java.util.stream.Collectors;
  */
 
 @RestController
-@RequestMapping("/courses")
-public class CourseController extends BaseController<Course, String, CourseReq> {
-	private ICourseService courseService;
+@RequestMapping("/course-types")
+public class CourseTypeController extends BaseController<CourseType, String, CourseTypeReq> {
+	private ICourseTypeService typeService;
 
-	public CourseController(IBaseService<Course, String> service, ModelMapper mp, ICourseService courseService, Class<Course> courseClass) {
-		super(service, mp, courseClass);
-		this.courseService = courseService;
+	public CourseTypeController(IBaseService<CourseType, String> service, ModelMapper mp, ICourseTypeService typeService, Class<CourseType> courseTypeClass) {
+		super(service, mp, courseTypeClass);
+		this.typeService = typeService;
 	}
 
 	@PostMapping
-	public ResponseEntity<CommonRes> add(@RequestBody CourseReq req) {
-		Optional<Course> existingCourse = courseService.findByTitle(req.getTitle());
+	public ResponseEntity<CommonRes> add(@RequestBody CourseTypeReq req) {
+		Optional<CourseType> existingType = typeService.findByName(req.getName());
 
-		if (!existingCourse.isPresent()) {
-			Course mappedReq = mp.map(req, Course.class);
+
+		if (!existingType.isPresent()) {
+			CourseType mappedReq = mp.map(req, CourseType.class);
 
 			service.create(mappedReq);
-			Optional<Course> addedData = courseService.findByTitle(req.getTitle());
-			List<Course> listData = addedData.stream().collect(Collectors.toList());
+			Optional<CourseType> addedData = typeService.findByName(req.getName());
+			List<CourseType> listData = addedData.stream().collect(Collectors.toList());
 
-			SuccessRes<Course> res = new SuccessRes<>();
+			SuccessRes<CourseType> res = new SuccessRes<>();
 
 			res.setCode(HttpStatus.OK.toString());
 			res.setStatus(HttpStatus.OK.getReasonPhrase());
@@ -62,13 +64,13 @@ public class CourseController extends BaseController<Course, String, CourseReq> 
 
 		res.setCode(notAcceptable.toString());
 		res.setStatus(notAcceptable.getReasonPhrase());
-		res.setMsg("udah ada course dengan title: " + req.getTitle());
+		res.setMsg("udah ada course type dengan name: " + req.getName());
 
 		return ResponseEntity.status(notAcceptable).body(res);
 	}
 
-//	@GetMapping("/title")
-//	public Optional<Course> findByTitle(@RequestParam(value = "title", defaultValue = "") String title) {
-//		return courseService.findByTitle(title);
+//	@GetMapping("/")
+//	public Optional<CourseType> findByName(@RequestParam(value = "name", defaultValue = "") String name) {
+//		return typeService.findByName(name);
 //	}
 }
