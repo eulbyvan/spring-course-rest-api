@@ -50,7 +50,7 @@ public class CourseTypeController extends BaseController<CourseType, String, Cou
 
 			SuccessRes<CourseType> res = new SuccessRes<>();
 
-			res.setCode(HttpStatus.OK.value());
+			res.setCode(HttpStatus.OK.toString());
 			res.setStatus(HttpStatus.OK.getReasonPhrase());
 			res.setMsg("mantap bos, sukses");
 			res.setData(listData);
@@ -62,7 +62,7 @@ public class CourseTypeController extends BaseController<CourseType, String, Cou
 
 		ErrorRes<Course> res = new ErrorRes<>();
 
-		res.setCode(notAcceptable.value());
+		res.setCode(notAcceptable.toString());
 		res.setStatus(notAcceptable.getReasonPhrase());
 		res.setMsg("udah ada course type dengan name: " + req.getName());
 

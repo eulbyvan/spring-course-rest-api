@@ -13,4 +13,5 @@ server:
   port: ${SERVER_PORT}
 
 service:
-  paymentUrl: ${PAYMENT_SVC}
+  payment:
+    url: ${SERVICE_PAYMENT_URL}

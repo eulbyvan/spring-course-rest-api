@@ -39,7 +39,7 @@ public class BaseController<T, ID, U> {
 
 			SuccessRes<T> res = new SuccessRes<>();
 
-			res.setCode(HttpStatus.OK.value());
+			res.setCode(HttpStatus.OK.toString());
 			res.setStatus(HttpStatus.OK.getReasonPhrase());
 			res.setMsg("mantap bos, sukses");
 			res.setData(listData);
@@ -51,7 +51,7 @@ public class BaseController<T, ID, U> {
 
 		ErrorRes<T> res = new ErrorRes<>();
 
-		res.setCode(notFound.value());
+		res.setCode(notFound.toString());
 		res.setStatus(notFound.getReasonPhrase());
 		res.setMsg("gaada datanya bang");
 
@@ -65,7 +65,7 @@ public class BaseController<T, ID, U> {
 		if (!data.isEmpty()) {
 			SuccessRes<T> res = new SuccessRes<>();
 
-			res.setCode(HttpStatus.OK.value());
+			res.setCode(HttpStatus.OK.toString());
 			res.setStatus(HttpStatus.OK.getReasonPhrase());
 			res.setMsg("mantap bos, sukses");
 			res.setData(data);
@@ -77,7 +77,7 @@ public class BaseController<T, ID, U> {
 
 		ErrorRes<T> res = new ErrorRes<>();
 
-		res.setCode(notFound.value());
+		res.setCode(notFound.toString());
 		res.setStatus(notFound.getReasonPhrase());
 		res.setMsg("gaada datanya bang");
 
@@ -94,7 +94,7 @@ public class BaseController<T, ID, U> {
 		if (!listData.isEmpty()) {
 			SuccessRes<T> res = new SuccessRes<>();
 
-			res.setCode(HttpStatus.OK.value());
+			res.setCode(HttpStatus.OK.toString());
 			res.setStatus(HttpStatus.OK.getReasonPhrase());
 			res.setMsg("mantap bos, sukses");
 			res.setData(listData);
@@ -106,7 +106,7 @@ public class BaseController<T, ID, U> {
 
 		ErrorRes<T> res = new ErrorRes<>();
 
-		res.setCode(notFound.value());
+		res.setCode(notFound.toString());
 		res.setStatus(notFound.getReasonPhrase());
 		res.setMsg("gaada datanya bang");
 
@@ -120,7 +120,7 @@ public class BaseController<T, ID, U> {
 		if (deletedId.equals(null)) {
 			SuccessRes<T> res = new SuccessRes<>();
 
-			res.setCode(HttpStatus.OK.value());
+			res.setCode(HttpStatus.OK.toString());
 			res.setStatus(HttpStatus.OK.getReasonPhrase());
 			res.setMsg("mantap bos, sukses");
 			res.setData(null);
@@ -132,7 +132,7 @@ public class BaseController<T, ID, U> {
 
 		ErrorRes<T> res = new ErrorRes<>();
 
-		res.setCode(notFound.value());
+		res.setCode(notFound.toString());
 		res.setStatus(notFound.getReasonPhrase());
 		res.setMsg("gaada datanya bang");
 
