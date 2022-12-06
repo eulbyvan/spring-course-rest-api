@@ -88,6 +88,16 @@ public class BaseController<T, ID, U> {
 	public ResponseEntity<CommonRes> edit(@PathVariable("id") ID reqId, @RequestBody U req) {
 		T mappedReq = mp.map(req, myClass);
 
+		Object wrapper = new Object(){
+			ID id = reqId;
+
+			public ID getId() {
+				return id;
+			}
+		};
+
+		mp.map(wrapper, mappedReq);
+
 		T data = service.update(reqId, mappedReq);
 		List<T> listData = Optional.of(data).stream().collect(Collectors.toList());
 
