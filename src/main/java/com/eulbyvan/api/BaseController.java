@@ -117,7 +117,7 @@ public class BaseController<T, ID, U> {
 	public ResponseEntity<CommonRes> remove(@PathVariable("id") ID reqId) {
 		ID deletedId = service.delete(reqId);
 
-		if (deletedId.equals(null)) {
+		if (!deletedId.equals(null)) {
 			SuccessRes<T> res = new SuccessRes<>();
 
 			res.setCode(HttpStatus.OK.value());
