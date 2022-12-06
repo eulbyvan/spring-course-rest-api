@@ -1,5 +1,6 @@
 package com.eulbyvan.service;
 
+import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -10,4 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface ICourseFileService {
     void uploadMaterial(MultipartFile multipartFile);
+
+    Resource downloadMaterial(String filename);
 }

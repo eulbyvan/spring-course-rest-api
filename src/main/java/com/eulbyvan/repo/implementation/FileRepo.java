@@ -45,7 +45,7 @@ public class FileRepo implements IFileRepo {
             if (resource.exists()) {
                 return resource;
             } else {
-                throw new RuntimeException("Could'nt read the file");
+                throw new RuntimeException("Couldn't read the file");
             }
         } catch (MalformedURLException e) {
             throw new RuntimeException("Error " + e.getMessage());
