@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class ErrorRes<T> extends CommonRes {
 //	private T reason;
 
-	public ErrorRes(Integer code, String status, String msg) {
+	public ErrorRes(String code, String status, String msg) {
 		super.setCode(code);
 		super.setStatus(status);
 		super.setMsg(msg);

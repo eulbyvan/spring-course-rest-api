@@ -3,6 +3,7 @@ package com.eulbyvan.api;
 import com.eulbyvan.model.dto.response.CommonRes;
 import com.eulbyvan.model.dto.response.ErrorRes;
 import com.eulbyvan.model.dto.response.SuccessRes;
+import com.eulbyvan.model.exception.NotFoundException;
 import com.eulbyvan.service.IBaseService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -31,31 +32,23 @@ public class BaseController<T, ID, U> {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<CommonRes> findById(@PathVariable("id") ID reqId) {
+	public ResponseEntity<CommonRes> findById(@PathVariable("id") ID reqId) throws Exception {
 		Optional<T> data = service.findById(reqId);
 
-		if (data.isPresent()) {
-			List<T> listData = data.stream().collect(Collectors.toList());
-
-			SuccessRes<T> res = new SuccessRes<>();
-
-			res.setCode(HttpStatus.OK.value());
-			res.setStatus(HttpStatus.OK.getReasonPhrase());
-			res.setMsg("mantap bos, sukses");
-			res.setData(listData);
-
-			return ResponseEntity.status(HttpStatus.OK).body(res);
+		if (!data.isPresent()) {
+			throw new NotFoundException();
 		}
 
-		HttpStatus notFound = HttpStatus.NOT_FOUND;
+		List<T> listData = data.stream().collect(Collectors.toList());
 
-		ErrorRes<T> res = new ErrorRes<>();
+		SuccessRes<T> res = new SuccessRes<>();
 
-		res.setCode(notFound.value());
-		res.setStatus(notFound.getReasonPhrase());
-		res.setMsg("gaada datanya bang");
+		res.setCode(HttpStatus.OK.toString());
+		res.setStatus(HttpStatus.OK.getReasonPhrase());
+		res.setMsg("mantap bos, sukses");
+		res.setData(listData);
 
-		return ResponseEntity.status(notFound).body(res);
+		return ResponseEntity.status(HttpStatus.OK).body(res);
 	}
 
 	@GetMapping
@@ -65,7 +58,7 @@ public class BaseController<T, ID, U> {
 		if (!data.isEmpty()) {
 			SuccessRes<T> res = new SuccessRes<>();
 
-			res.setCode(HttpStatus.OK.value());
+			res.setCode(HttpStatus.OK.toString());
 			res.setStatus(HttpStatus.OK.getReasonPhrase());
 			res.setMsg("mantap bos, sukses");
 			res.setData(data);
@@ -77,7 +70,7 @@ public class BaseController<T, ID, U> {
 
 		ErrorRes<T> res = new ErrorRes<>();
 
-		res.setCode(notFound.value());
+		res.setCode(notFound.toString());
 		res.setStatus(notFound.getReasonPhrase());
 		res.setMsg("gaada datanya bang");
 
@@ -104,7 +97,7 @@ public class BaseController<T, ID, U> {
 		if (!listData.isEmpty()) {
 			SuccessRes<T> res = new SuccessRes<>();
 
-			res.setCode(HttpStatus.OK.value());
+			res.setCode(HttpStatus.OK.toString());
 			res.setStatus(HttpStatus.OK.getReasonPhrase());
 			res.setMsg("mantap bos, sukses");
 			res.setData(listData);
@@ -116,7 +109,7 @@ public class BaseController<T, ID, U> {
 
 		ErrorRes<T> res = new ErrorRes<>();
 
-		res.setCode(notFound.value());
+		res.setCode(notFound.toString());
 		res.setStatus(notFound.getReasonPhrase());
 		res.setMsg("gaada datanya bang");
 
@@ -130,7 +123,7 @@ public class BaseController<T, ID, U> {
 		if (!deletedId.equals(null)) {
 			SuccessRes<T> res = new SuccessRes<>();
 
-			res.setCode(HttpStatus.OK.value());
+			res.setCode(HttpStatus.OK.toString());
 			res.setStatus(HttpStatus.OK.getReasonPhrase());
 			res.setMsg("mantap bos, sukses");
 			res.setData(null);
@@ -142,7 +135,7 @@ public class BaseController<T, ID, U> {
 
 		ErrorRes<T> res = new ErrorRes<>();
 
-		res.setCode(notFound.value());
+		res.setCode(notFound.toString());
 		res.setStatus(notFound.getReasonPhrase());
 		res.setMsg("gaada datanya bang");
 
