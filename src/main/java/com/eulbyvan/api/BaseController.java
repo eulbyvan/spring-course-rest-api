@@ -32,7 +32,7 @@ public class BaseController<T, ID, U> {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<CommonRes> findById(@PathVariable("id") ID reqId) throws Exception {
+	public ResponseEntity<CommonRes> findById(@PathVariable("id") ID reqId) {
 		Optional<T> data = service.findById(reqId);
 
 		if (!data.isPresent()) {
@@ -117,28 +117,14 @@ public class BaseController<T, ID, U> {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<CommonRes> remove(@PathVariable("id") ID reqId) {
-		ID deletedId = service.delete(reqId);
+	public ResponseEntity<CommonRes> remove(@PathVariable("id") ID reqId) throws Exception{
+		SuccessRes<ID> res = new SuccessRes<>();
 
-		if (!deletedId.equals(null)) {
-			SuccessRes<T> res = new SuccessRes<>();
+		res.setCode(HttpStatus.OK.toString());
+		res.setStatus(HttpStatus.OK.getReasonPhrase());
+		res.setMsg("mantap bos, sukses");
+		res.setData(List.of(reqId));
 
-			res.setCode(HttpStatus.OK.toString());
-			res.setStatus(HttpStatus.OK.getReasonPhrase());
-			res.setMsg("mantap bos, sukses");
-			res.setData(null);
-
-			return ResponseEntity.status(HttpStatus.OK).body(res);
-		}
-
-		HttpStatus notFound = HttpStatus.NOT_FOUND;
-
-		ErrorRes<T> res = new ErrorRes<>();
-
-		res.setCode(notFound.toString());
-		res.setStatus(notFound.getReasonPhrase());
-		res.setMsg("gaada datanya bang");
-
-		return ResponseEntity.status(notFound).body(res);
+		return ResponseEntity.status(HttpStatus.OK).body(res);
 	}
 }

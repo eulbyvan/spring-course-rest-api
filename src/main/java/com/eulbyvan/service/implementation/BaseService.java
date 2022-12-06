@@ -1,5 +1,6 @@
 package com.eulbyvan.service.implementation;
 
+import com.eulbyvan.model.exception.NotFoundException;
 import com.eulbyvan.service.IBaseService;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -21,7 +22,9 @@ public class BaseService<T, ID> implements IBaseService<T, ID> {
 
 	@Override
 	public Optional<T> findById(ID reqId) {
-		return repo.findById(reqId);
+		Optional<T> res = repo.findById(reqId);
+		if (res.isEmpty()) throw new NotFoundException();
+		return res;
 	}
 
 	@Override
@@ -43,10 +46,8 @@ public class BaseService<T, ID> implements IBaseService<T, ID> {
 	}
 
 	@Override
-	public ID delete(ID reqId) {
+	public void delete(ID reqId) throws Exception {
 		Optional<T> existingData = findById(reqId);
-		if (existingData.isPresent()) repo.deleteById(reqId);
-
-		return reqId;
+		repo.deleteById(reqId);
 	}
 }

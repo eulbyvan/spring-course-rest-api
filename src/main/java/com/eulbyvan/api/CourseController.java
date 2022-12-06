@@ -39,32 +39,32 @@ public class CourseController extends BaseController<Course, String, CourseReq> 
 	public ResponseEntity<CommonRes> add(@RequestBody CourseReq req) {
 		Optional<Course> existingCourse = courseService.findByTitle(req.getTitle());
 
-		if (!existingCourse.isPresent()) {
-			Course mappedReq = mp.map(req, Course.class);
+		if (existingCourse.isPresent()) {
+			HttpStatus notAcceptable = HttpStatus.NOT_ACCEPTABLE;
 
-			service.create(mappedReq);
-			Optional<Course> addedData = courseService.findByTitle(req.getTitle());
-			List<Course> listData = addedData.stream().collect(Collectors.toList());
+			ErrorRes<Course> res = new ErrorRes<>();
 
-			SuccessRes<Course> res = new SuccessRes<>();
+			res.setCode(notAcceptable.toString());
+			res.setStatus(notAcceptable.getReasonPhrase());
+			res.setMsg("udah ada course dengan title: " + req.getTitle());
 
-			res.setCode(HttpStatus.OK.toString());
-			res.setStatus(HttpStatus.OK.getReasonPhrase());
-			res.setMsg("mantap bos, sukses");
-			res.setData(listData);
-
-			return ResponseEntity.status(HttpStatus.OK).body(res);
+			return ResponseEntity.status(notAcceptable).body(res);
 		}
 
-		HttpStatus notAcceptable = HttpStatus.NOT_ACCEPTABLE;
+		Course mappedReq = mp.map(req, Course.class);
 
-		ErrorRes<Course> res = new ErrorRes<>();
+		service.create(mappedReq);
+		Optional<Course> addedData = courseService.findByTitle(req.getTitle());
+		List<Course> listData = addedData.stream().collect(Collectors.toList());
 
-		res.setCode(notAcceptable.toString());
-		res.setStatus(notAcceptable.getReasonPhrase());
-		res.setMsg("udah ada course dengan title: " + req.getTitle());
+		SuccessRes<Course> res = new SuccessRes<>();
 
-		return ResponseEntity.status(notAcceptable).body(res);
+		res.setCode(HttpStatus.OK.toString());
+		res.setStatus(HttpStatus.OK.getReasonPhrase());
+		res.setMsg("mantap bos, sukses");
+		res.setData(listData);
+
+		return ResponseEntity.status(HttpStatus.OK).body(res);
 	}
 
 //	@GetMapping("/title")

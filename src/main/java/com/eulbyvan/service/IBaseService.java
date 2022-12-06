@@ -18,5 +18,5 @@ public interface IBaseService<T, ID> {
 
 	T update(ID reqId, T req);
 
-	ID delete(ID reqId);
+	void delete(ID reqId) throws Exception;
 }
