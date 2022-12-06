@@ -1,10 +1,11 @@
-package com.eulbyvan.repo;
+package com.eulbyvan.repo.implementation;
 
 import com.eulbyvan.model.dto.request.CoursePaymentReq;
 import com.eulbyvan.model.dto.response.CoursePaymentRes;
 import com.eulbyvan.model.dto.response.ErrorRes;
 import com.eulbyvan.model.dto.response.SuccessRes;
 import com.eulbyvan.model.exception.RestTemplateException;
+import com.eulbyvan.repo.ICoursePaymentRepo;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;

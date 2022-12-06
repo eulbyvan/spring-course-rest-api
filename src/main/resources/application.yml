@@ -15,3 +15,5 @@ server:
 service:
   payment:
     url: ${SERVICE_PAYMENT_URL}
+upload:
+  path: ${FILE_PATH}
