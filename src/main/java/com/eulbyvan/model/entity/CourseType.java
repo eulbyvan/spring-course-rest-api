@@ -2,7 +2,9 @@ package com.eulbyvan.model.entity;
 
 import com.eulbyvan.model.UUIDBasedEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +19,8 @@ import java.util.List;
  */
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "tbl_course_type")
 public class CourseType extends UUIDBasedEntity {
